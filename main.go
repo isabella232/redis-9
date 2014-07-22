@@ -69,11 +69,12 @@ import "C"
 import (
 	"errors"
 	"fmt"
-	"menteslibres.net/gosexy/to"
 	"reflect"
 	"strings"
 	"time"
 	"unsafe"
+
+	"menteslibres.net/gosexy/to"
 )
 
 const (
@@ -231,6 +232,7 @@ func (self *Client) setContext(ctx *C.redisContext) error {
 	if ctx == nil {
 		return ErrFailedAllocation
 	} else if ctx.err > 0 {
+		self.ctx = ctx
 		err := self.redisError()
 		C.redisFree(ctx)
 		self.ctx = nil
